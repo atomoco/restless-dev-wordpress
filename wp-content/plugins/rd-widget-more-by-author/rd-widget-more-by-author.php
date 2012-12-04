@@ -34,6 +34,7 @@ class rd_widget_more_by_author extends WP_Widget {
       $amount = $instance['amount'];
       $authors_posts = get_posts( array( 'author' => $authordata->ID, 'post__not_in' => array( $post->ID ), 'posts_per_page' => 5 ) );
       
+      // if there are no other posts by this author, don't show anything
       if ( sizeof($authors_posts) < 1 ) {
         return;
       }
