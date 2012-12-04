@@ -1,6 +1,6 @@
 <?php
 /**
- * Twenty Eleven Theme Options
+ * Restless Development Theme Options
  *
  * @package WordPress
  * @subpackage Restless_Development_1
