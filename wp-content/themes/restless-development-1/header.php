@@ -46,7 +46,18 @@
 
 	?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
+<?php
+  if ( DESIGNSWITCH == 'high' ) {
+?>
 <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
+<?php    
+  } else {
+?>
+<link rel="stylesheet" type="text/css" media="all" href="<?php echo str_replace('style.', 'style.low.', get_bloginfo( 'stylesheet_url' )); ?>" />
+<?php    
+  }
+?>
+
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
@@ -111,6 +122,10 @@
 				<?php endif; // end check for featured image or standard header ?>
 			</a>
 			<?php endif; // end check for removed header image ?>
+
+			<?php
+			  echo rd_designswitch_print_switch();
+		  ?>
 
 			<?php
 				// Has the text been hidden?
