@@ -92,7 +92,7 @@
 				if ( $header_image AND DESIGNSWITCH == 'high' ) :
 				  $header_image_width = HEADER_IMAGE_WIDTH;
 					?>
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="header-image">
 				<?php
 					// The header image
 					// Check if this is a post or page, if it has a thumbnail, and if it's a big one
@@ -119,19 +119,6 @@
 			<?php
 			  echo rd_designswitch_print_switch();
 		  ?>
-
-			<?php
-				// Has the text been hidden?
-				if ( 'blank' == get_header_textcolor() ) :
-			?>
-				<div class="only-search<?php if ( $header_image ) : ?> with-image<?php endif; ?>">
-				<?php get_search_form(); ?>
-				</div>
-			<?php
-				else :
-			?>
-				<?php get_search_form(); ?>
-			<?php endif; ?>
 
 			<nav id="access" role="navigation">
 				<h3 class="assistive-text"><?php _e( 'Main menu', 'restlessdevelopment1' ); ?></h3>

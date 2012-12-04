@@ -529,6 +529,16 @@ a:hover {
 	width: 100%;
 }
 
+/* =Design switch
+-------------------------------------------------------------- */
+
+.rd-designswitch-panel {
+  position:  absolute;
+	right: 20px;
+	top: 20px;
+	padding: 10px;
+	background: rgba(0,0,0,0.9);
+}
 
 /* =Menu
 -------------------------------------------------------------- */
