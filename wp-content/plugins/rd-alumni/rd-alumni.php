@@ -8,30 +8,34 @@ Author: Restless Development
 Author URI: http://www.restless-development.org.uk
 */
 
-/*
-add_action('init','hello_world');
-function hello_world() {
-  echo "Hello World...";
+
+
+
+
+// function that runs on page run
+function rd_alumni_init() {
+
+  // find the plugin path and save it for later
+  define('RDALABSPATH', dirname(__FILE__).'/');
+    
 }
-*/
+add_action('init','rd_alumni_init');
 
-if ( is_admin() ) {
 
-	var $hook 			= 'rd-alumni';
-	var $filename		= 'rd-alumni/rd-alumni.php';
-	var $longname		= 'Restless Development Alumni directory';
-	var $shortname		= 'Alumni';
-	var $currentoption 	= 'list';
-	var $ozhicon		= 'tag.png';
-	
-	function WPSEO_Admin() {
-		$this->multisite_defaults();
-		add_action( 'init', array(&$this, 'init') );
-	}
 
-  global $wp_admin_bar;
+// ONLY IN ADMIN AREA
+if ( is_admin() ){
+
+  /* Call the html code */
+  add_action( 'admin_menu', 'rd_alumni_admin_area' );
   
-	$wp_admin_bar->add_menu( array( 'id' => 'wpseo-menu', 'title' => __( 'sssssss' ), 'href' => get_admin_url('admin.php?page=wpseo_dashboard'), ) );
-	
+  function rd_alumni_admin_area() {
+    add_menu_page( 'Alumni admin', 'Alumni', 'administrator',
+    'rd-alumni', 'rd_alumni_admin_list', '' );
+  }
+
+  function rd_alumni_admin_list() {
+    require_once ( RDALABSPATH . 'admin/list.php' );
+  }
+
 }
-?>
