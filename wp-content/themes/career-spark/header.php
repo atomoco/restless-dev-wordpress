@@ -5,8 +5,8 @@
  * Displays all of the <head> section and everything up till <div id="main">
  *
  * @package WordPress
- * @subpackage Restless_Development_1
- * @since Restless Development 1.0
+ * @subpackage Career_Spark
+ * @since Career Spark 1.0
  */
 ?><!DOCTYPE html>
 <!--[if IE 6]>
@@ -42,7 +42,7 @@
 
 	// Add a page number if necessary:
 	if ( $paged >= 2 || $page >= 2 )
-		echo ' | ' . sprintf( __( 'Page %s', 'restlessdevelopment1' ), max( $paged, $page ) );
+		echo ' | ' . sprintf( __( 'Page %s', 'careerspark' ), max( $paged, $page ) );
 
 	?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -121,10 +121,10 @@
 		  ?>
 
 			<nav id="access" role="navigation">
-				<h3 class="assistive-text"><?php _e( 'Main menu', 'restlessdevelopment1' ); ?></h3>
+				<h3 class="assistive-text"><?php _e( 'Main menu', 'careerspark' ); ?></h3>
 				<?php /* Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff. */ ?>
-				<div class="skip-link"><a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to primary content', 'restlessdevelopment1' ); ?>"><?php _e( 'Skip to primary content', 'restlessdevelopment1' ); ?></a></div>
-				<div class="skip-link"><a class="assistive-text" href="#secondary" title="<?php esc_attr_e( 'Skip to secondary content', 'restlessdevelopment1' ); ?>"><?php _e( 'Skip to secondary content', 'restlessdevelopment1' ); ?></a></div>
+				<div class="skip-link"><a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to primary content', 'careerspark' ); ?>"><?php _e( 'Skip to primary content', 'careerspark' ); ?></a></div>
+				<div class="skip-link"><a class="assistive-text" href="#secondary" title="<?php esc_attr_e( 'Skip to secondary content', 'careerspark' ); ?>"><?php _e( 'Skip to secondary content', 'careerspark' ); ?></a></div>
 				<?php /* Our navigation menu. If one isn't filled out, wp_nav_menu falls back to wp_page_menu. The menu assigned to the primary location is the one used. If one isn't assigned, the menu with the lowest ID is used. */ ?>
 				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 			</nav><!-- #access -->
