@@ -98,6 +98,7 @@ body {
 }
 
 /* Singular */
+/*
 .singular #primary {
 	margin: 0;
 }
@@ -114,8 +115,10 @@ body {
 	margin: 0 auto;
 	width: 68.9%;
 }
+*/
 
 /* Attachments */
+/*
 .singular .image-attachment .entry-content {
 	margin: 0 auto;
 	width: auto;
@@ -124,6 +127,7 @@ body {
 	margin: 0 auto;
 	width: 68.9%;
 }
+*/
 
 /* Showcase */
 .page-template-showcase-php #primary,
