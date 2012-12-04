@@ -9,7 +9,7 @@ Usage: widget.
 */
 
 // debug
- ini_set ('display_errors', true);
+// ini_set ('display_errors', true);
 
 class rd_widget_about_author extends WP_Widget {
 
@@ -35,17 +35,24 @@ class rd_widget_about_author extends WP_Widget {
       $author = $post->post_author;
       $name = get_the_author_meta('nickname', $author);
       $alt_name = get_the_author_meta('user_nicename', $author);
-      $description = get_the_author_meta('description', $author);
+      $description = trim(get_the_author_meta('description', $author));
       $author_link = get_author_posts_url($author);
+      
+      // if the author has no description, don't show (commented-out, as having "broken" looking  try and force admins to add author bios)
+      /*
+      if ( strlen(trim($description)) < 10 ) {
+        return;
+      }
+      //*/
       
       // print the widget
    ?> 
    
    
    <h3 class="widget-title"><?php echo $title ?></h3>
-   <div class="author-bio">
-     <h5 class="author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></h5>
-     <span class="author-avatar">
+   <div class="about-author">
+     <h5 class="about-author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></h5>
+     <span class="about-author-avatar">
        <?php
         // try getting an image from the "user photo" plugin first: http://wordpress.org/extend/plugins/user-photo/
   			if(function_exists('userphoto_exists') && userphoto_exists($author)){
@@ -61,7 +68,8 @@ class rd_widget_about_author extends WP_Widget {
   			}
 			?>
 		 </span>
-     <p class="author-description"><?php echo $description; ?> </p>
+     <p class="about-author-summary"><?php echo ( $description ? $description : 'Check back soon for a biography of this author' ); ?> </p>
+     <span class="about-author-clear"></span>
    </div>
    
    
