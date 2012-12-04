@@ -48,29 +48,30 @@ class rd_widget_about_author extends WP_Widget {
       // print the widget
    ?> 
    
-   
-   <h3 class="widget-title"><?php echo $title ?></h3>
-   <div class="about-author">
-     <h5 class="about-author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></h5>
-     <span class="about-author-avatar">
-       <?php
-        // try getting an image from the "user photo" plugin first: http://wordpress.org/extend/plugins/user-photo/
-  			if(function_exists('userphoto_exists') && userphoto_exists($author)){
-  				userphoto_thumbnail($author);
-  			} else {
-  		    // fall back to gravatar
-  			  $avatar = get_avatar($authordata->ID, 96);
-  			  // or fall back to blank image
-    			if (!$avatar) {
-    				$avatar = '<img src="' . RDAWABSPATH . 'images/no-image.gif' . '" width="' . $av_size . '" height="' . $av_size . '" alt="no photo">';
+   <aside class="widget">
+     <h3 class="widget-title"><?php echo $title ?></h3>
+     <div class="about-author">
+       <h5 class="about-author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></h5>
+       <span class="about-author-avatar">
+         <?php
+          // try getting an image from the "user photo" plugin first: http://wordpress.org/extend/plugins/user-photo/
+    			if(function_exists('userphoto_exists') && userphoto_exists($author)){
+    				userphoto_thumbnail($author);
+    			} else {
+    		    // fall back to gravatar
+    			  $avatar = get_avatar($authordata->ID, 96);
+    			  // or fall back to blank image
+      			if (!$avatar) {
+      				$avatar = '<img src="' . RDAWABSPATH . 'images/no-image.gif' . '" width="' . $av_size . '" height="' . $av_size . '" alt="no photo">';
+      			}
+      			echo $avatar;
     			}
-    			echo $avatar;
-  			}
-			?>
-		 </span>
-     <p class="about-author-summary"><?php echo ( $description ? $description : 'Check back soon for a biography of this author' ); ?> </p>
-     <span class="about-author-clear"></span>
-   </div>
+  			?>
+  		 </span>
+       <p class="about-author-summary"><?php echo ( $description ? $description : 'Check back soon for a biography of this author' ); ?> </p>
+       <span class="about-author-clear"></span>
+     </div>
+   </aside>
    
    
     <?php

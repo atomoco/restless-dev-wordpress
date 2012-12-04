@@ -43,18 +43,20 @@ class rd_widget_more_by_author extends WP_Widget {
    ?> 
    
    
-   <h3 class="widget-title"><?php echo $title ?></h3>
-   <div class="more-by-author">
-     <ul>
-     <?php
-     
-      foreach ( $authors_posts as $authors_post ) {
-        echo '<li><a href="' . get_permalink( $authors_post->ID ) . '">' . apply_filters( 'the_title', $authors_post->post_title, $authors_post->ID ) . '</a></li>';
-      }
-     ?>
-     
-     </ul>
-   </div>
+   <aside class="widget">
+     <h3 class="widget-title"><?php echo $title ?></h3>
+     <div class="more-by-author">
+       <ul>
+       <?php
+       
+        foreach ( $authors_posts as $authors_post ) {
+          echo '<li><a href="' . get_permalink( $authors_post->ID ) . '">' . apply_filters( 'the_title', $authors_post->post_title, $authors_post->ID ) . '</a></li>';
+        }
+       ?>
+       
+       </ul>
+     </div>
+    </aside>
    
    
     <?php
