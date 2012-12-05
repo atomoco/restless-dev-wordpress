@@ -33,7 +33,7 @@ class rd_widget_about_author extends WP_Widget {
       $title = apply_filters('widget_title', $instance['title']);
       $heading = $instance['heading'];
       $author = $post->post_author;
-      $name = get_the_author_meta('nickname', $author);
+      $name = get_the_author_meta('display_name', $author);
       $alt_name = get_the_author_meta('user_nicename', $author);
       $description = trim(get_the_author_meta('description', $author));
       $author_link = get_author_posts_url($author);
@@ -51,7 +51,6 @@ class rd_widget_about_author extends WP_Widget {
    <aside class="widget">
      <h3 class="widget-title"><?php echo $title ?></h3>
      <div class="about-author">
-       <<?php echo $heading; ?> class="about-author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></<?php echo $heading; ?>>
        <span class="about-author-avatar">
          <a href= "<?php echo $author_link; ?>" >
          <?php
@@ -71,6 +70,7 @@ class rd_widget_about_author extends WP_Widget {
   			
          </a>
   		 </span>
+       <<?php echo $heading; ?> class="about-author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></<?php echo $heading; ?>>
        <p class="about-author-summary"><?php echo ( $description ? $description : 'Check back soon for a biography of this author' ); ?> </p>
        <span class="about-author-clear"></span>
      </div>
