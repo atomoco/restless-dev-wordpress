@@ -118,6 +118,28 @@ nav ul ul { /* sub menus */
   background:              #eee;
 }
 
+/* About the author widget */
+.about-author h2,
+.about-author h3,
+.about-author h4,
+.about-author h5,
+.about-author p {
+  margin:                  0;
+}
+.about-author-with-av .about-author-name,
+.about-author-with-av .about-author-summary {
+  margin-left:             90px; 
+}
+.about-author-avatar {
+  float:                   left;
+}
+.about-author-clear {
+  display:                 block;
+  clear:                   both;
+  height:                  0;
+  overflow:                hidden;
+}
+
 /* Assistive text */
 .assistive-text {
 	position:                absolute !important;
@@ -135,4 +157,12 @@ nav ul ul { /* sub menus */
 	clip:                    auto !important;
 	font-size:               12px;
 	text-decoration:         underline;
+}
+
+/* misc */
+
+.clear {
+  clear:                   both;
+  height:                  0;
+  overflow:                hidden;
 }
