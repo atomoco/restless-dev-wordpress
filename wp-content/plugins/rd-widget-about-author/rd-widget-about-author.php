@@ -50,7 +50,8 @@ class rd_widget_about_author extends WP_Widget {
    
    <aside class="widget">
      <h3 class="widget-title"><?php echo $title ?></h3>
-     <div class="about-author">
+     <div class="about-author <?php echo ((!defined('DESIGNSWITCH') OR DESIGNSWITCH == 'high') ? 'about-author-with-av' : ''); ?>">
+       <?php if (!defined('DESIGNSWITCH') OR DESIGNSWITCH == 'high') { ?>
        <span class="about-author-avatar">
          <a href= "<?php echo $author_link; ?>" >
          <?php
@@ -70,6 +71,8 @@ class rd_widget_about_author extends WP_Widget {
   			
          </a>
   		 </span>
+       <?php } ?>
+       
        <<?php echo $heading; ?> class="about-author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></<?php echo $heading; ?>>
        <p class="about-author-summary"><?php echo ( $description ? $description : 'Check back soon for a biography of this author' ); ?> </p>
        <span class="about-author-clear"></span>
