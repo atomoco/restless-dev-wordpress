@@ -32,6 +32,7 @@ if ( $header_image AND DESIGNSWITCH == 'high' ) :
 			$header_image_height = HEADER_IMAGE_HEIGHT;
 		}
   endif; // end check for featured image or standard header
+  $header_image = 'background:url(' . get_header_image() . ')';
 endif; // end check for removed header image
 			
 ?><!DOCTYPE html>
@@ -106,7 +107,7 @@ endif; // end check for removed header image
 
 <div id="page">
 
-	<header id="branding" class="container_12" role="banner" style="background:url(<?php header_image(); ?>)">
+	<header id="branding" class="container_12" role="banner" style="<?php echo $header_image; ?>">
 		<hgroup class="grid_4">
 			<h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 			<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
