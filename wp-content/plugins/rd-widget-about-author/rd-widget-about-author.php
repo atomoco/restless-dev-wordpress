@@ -31,7 +31,7 @@ class rd_widget_about_author extends WP_Widget {
       
       // retrieve info
       $title = apply_filters('widget_title', $instance['title']);
-      $av_size = $instance['size'];
+      $heading = $instance['heading'];
       $author = $post->post_author;
       $name = get_the_author_meta('nickname', $author);
       $alt_name = get_the_author_meta('user_nicename', $author);
@@ -51,22 +51,25 @@ class rd_widget_about_author extends WP_Widget {
    <aside class="widget">
      <h3 class="widget-title"><?php echo $title ?></h3>
      <div class="about-author">
-       <h5 class="about-author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></h5>
+       <<?php echo $heading; ?> class="about-author-name"><a href= "<?php echo $author_link; ?>" ><?php echo $name; ?></a></<?php echo $heading; ?>>
        <span class="about-author-avatar">
+         <a href= "<?php echo $author_link; ?>" >
          <?php
           // try getting an image from the "user photo" plugin first: http://wordpress.org/extend/plugins/user-photo/
     			if(function_exists('userphoto_exists') && userphoto_exists($author)){
     				userphoto_thumbnail($author);
     			} else {
     		    // fall back to gravatar
-    			  $avatar = get_avatar($authordata->ID, 96);
+    			  $avatar = get_avatar($authordata->ID, 64);
     			  // or fall back to blank image
       			if (!$avatar) {
-      				$avatar = '<img src="' . RDAWABSPATH . 'images/no-image.gif' . '" width="' . $av_size . '" height="' . $av_size . '" alt="no photo">';
+      				$avatar = '<img src="' . RDAWABSPATH . 'images/no-image.gif' . '" width="80" height="80" alt="no photo">';
       			}
       			echo $avatar;
     			}
   			?>
+  			
+         </a>
   		 </span>
        <p class="about-author-summary"><?php echo ( $description ? $description : 'Check back soon for a biography of this author' ); ?> </p>
        <span class="about-author-clear"></span>
@@ -81,7 +84,7 @@ class rd_widget_about_author extends WP_Widget {
     function update($new_instance, $old_instance) {       
       $instance = $old_instance;
       $instance['title'] = strip_tags($new_instance['title']);
-      $instance['size'] = strip_tags($new_instance['size']);
+      $instance['heading'] = strip_tags($new_instance['heading']);
       return $instance;
     }
 
@@ -94,22 +97,22 @@ class rd_widget_about_author extends WP_Widget {
       } else {
         $title='';
       }
-      if (array_key_exists('size', $instance)){
-        $size = esc_attr($instance['size']);
+      if (array_key_exists('heading', $instance)){
+        $heading = esc_attr($instance['heading']);
       } else {
-        $size=64;
+        $heading='h4';
       }
      
       // print admin interface
         ?>
             <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
-            <p><label for="<?php echo $this->get_field_id('size'); ?>"><?php _e('Avatar Size:'); ?>
-              <select id="<?php echo $this->get_field_id('size'); ?>" name="<?php echo $this->get_field_name('size'); ?>" value="<?php echo $size; ?>" >
+            <p><label for="<?php echo $this->get_field_id('heading'); ?>"><?php _e('Heading type:'); ?>
+              <select id="<?php echo $this->get_field_id('heading'); ?>" name="<?php echo $this->get_field_name('heading'); ?>" value="<?php echo $heading; ?>" >
              <?php
-             for ( $i = 16; $i <= 256; $i+=16 )
-              echo "<option value='$i' " . ( $size == $i ? "selected='selected'" : '' ) . ">$i</option>";
+             for ( $i = 2; $i <= 5; $i+=1 )
+              echo "<option value='h$i' " . ( $heading == 'h' . $i ? "selected='selected'" : '' ) . ">Heading size $i</option>";
                ?>
-              </select></label></p> 
+              </select></label></p>
         <?php 
     }
 }
