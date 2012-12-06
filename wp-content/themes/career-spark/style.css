@@ -11,6 +11,17 @@ Tags: dark, light, white, black, gray, one-column, two-columns, left-sidebar, ri
 Text Domain: careerspark
 */
 
+@font-face {
+    font-family: 'AsapItalic';
+    src: url('fonts/Asap-Italic-webfont.eot');
+    src: url('fonts/Asap-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Asap-Italic-webfont.woff') format('woff'),
+         url('fonts/Asap-Italic-webfont.ttf') format('truetype'),
+         url('fonts/Asap-Italic-webfont.svg#AsapItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
   font-family:            helvetica, arial, sans-serif;
   font-size:              14px;
@@ -27,8 +38,8 @@ body {
 }
 h1,h2,h3,h4 {
   margin:                 0.3em 0;
-  font-family:            'Asap', helvetica, arial, sans-serif;
-  font-style:             italic;
+  font-family:            'AsapItalic', helvetica, arial, sans-serif;
+  font-weight:             normal;
 }
 h1:first-child,
 h2:first-child,
@@ -40,20 +51,20 @@ h1 {
   font-size:               3em;
 }
 h2 {
-  font-size:               2.3em;
+  font-size:               2.2em;
 }
 h3 {
-  font-size:               1.8em;
+  font-size:               1.4em;
 }
 h4 {
-  font-size:               1.3em;
+  font-size:               1.2em;
 }
 
 /* Header */
 
 hgroup {
   margin:                  10px 0;
-  background:              rgba(255,255,255,0.9);
+  background:              #fff;
   text-align:              center;
 }
 #site-title {
