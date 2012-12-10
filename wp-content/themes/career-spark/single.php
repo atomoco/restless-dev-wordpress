@@ -9,7 +9,7 @@
 
 get_header(); ?>
 
-		<div id="primary" class="grid_8" role="main">
+		<div id="primary" role="main">
 
 			<?php while ( have_posts() ) : the_post(); ?>
 

@@ -106,31 +106,56 @@ endif; // end check for removed header image
 
 <body <?php body_class(); ?>>
 
+<a name="top"></a>
+
+<header id="branding" role="banner">
+  <div class="branding-inner">
+    <h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+    	
+    <nav id="nav1">
+  		<h3 class="assistive-text"><?php _e( 'Main menu', 'careerspark' ); ?></h3>
+  		<div class="skip-link"><a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to primary content', 'careerspark' ); ?>"><?php _e( 'Skip to primary content', 'careerspark' ); ?></a></div>
+  		<div class="skip-link"><a class="assistive-text" href="#secondary" title="<?php esc_attr_e( 'Skip to secondary content', 'careerspark' ); ?>"><?php _e( 'Skip to secondary content', 'careerspark' ); ?></a></div>
+      <?php 
+        // default WP nav menu overwridden
+        //wp_nav_menu( array( 'theme_location' => 'primary' ) ); 
+      ?>
+      <div class="nav1-main">
+        <a href="" id="nav1-alumni">
+          <h4>Alumni</h4>
+          <span>
+            Professional webpage
+          </span>
+        </a>
+        <span class="sep">|</span>
+        <a href="" id="nav1-employers">
+          <h4>Employers</h4>
+          <span>
+            Hiring Young People
+          </span>
+        </a>
+        <span class="sep">|</span>
+        <a href="" id="nav1-advice">
+          <h4>Advice</h4>
+          <span>
+            
+          </span>
+        </a>
+        <span class="sep">|</span>
+      </div>
+    </nav>
+    <div class="clear"></div>
+  </div>
+</header>
+
+
 <div id="page">
 
-	<header id="branding" class="container_12" role="banner" style="<?php echo $header_image; ?>">
-		<hgroup class="grid_4">
-			<h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
-		</hgroup>
+  <h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
 
-    <div class="grid_8" style="color:#999;">
-      powered by restless development
-    </div>
-
-		<?php
-		  echo rd_designswitch_print_switch();
-	  ?>
-  </header>
-  
-  <nav id="nav1" class="container_12" style="color:#fff;background:#666;">
-		<h3 class="assistive-text"><?php _e( 'Main menu', 'careerspark' ); ?></h3>
-		<div class="skip-link"><a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to primary content', 'careerspark' ); ?>"><?php _e( 'Skip to primary content', 'careerspark' ); ?></a></div>
-			<div class="skip-link"><a class="assistive-text" href="#secondary" title="<?php esc_attr_e( 'Skip to secondary content', 'careerspark' ); ?>"><?php _e( 'Skip to secondary content', 'careerspark' ); ?></a></div>
-    <div class="grid_12">
-      <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-    </div>
-  </nav>
+	<?php
+	  echo rd_designswitch_print_switch();
+  ?>
 
 
-	<div id="main" class="container_12">
+	<div id="main">

@@ -18,8 +18,8 @@ Author URI: http://www.restless-development.org.uk
 // when the plug-in is activated, add these settings to wordpress
 function rd_designwitch_install() {
   /* Creates new database field */
-  add_option("rd_designswitch_low_list", 'nokia,android,symbian,bada,ios,internet explorer 6', '', 'yes');
-  add_option("rd_designswitch_high_list", 'chrome,firefox,safari,internet explorer', '', 'yes');
+  add_option("rd_designswitch_low_list", 'nokia,android,symbian,bada,ios', '', 'yes');
+  add_option("rd_designswitch_high_list", 'chrome,firefox,safari,explorer', '', 'yes');
 }
 register_activation_hook(__FILE__,'rd_designwitch_install'); 
 

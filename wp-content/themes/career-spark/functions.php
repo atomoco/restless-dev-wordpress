@@ -118,8 +118,8 @@ function careerspark_setup() {
 		// The default header text color.
 		'default-text-color' => '000',
 		// The height and width of our custom header.
-		'width' => apply_filters( 'careerspark_header_image_width', 1000 ),
-		'height' => apply_filters( 'careerspark_header_image_height', 288 ),
+		'width' => apply_filters( 'careerspark_header_image_width', false ),
+		'height' => apply_filters( 'careerspark_header_image_height', 200 ),
 		// Support flexible heights.
 		'flex-height' => true,
 		// Random image rotation by default.
@@ -578,7 +578,13 @@ if ( ! function_exists( 'careerspark_posted_on' ) ) :
  * @since Career Spark 1.0
  */
 function careerspark_posted_on() {
-	printf( __( '<a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="by-author"> <span class="sep"> by </span> <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>', 'careerspark' ),
+	printf( __( '
+	  <div class="meta-posted">
+  	  <span class="sep">By </span> 
+  	  <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span><span class="meta-posted-on">,
+  	    <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="by-author">
+  	  </span>
+	  </div>', 'careerspark' ),
 		esc_url( get_permalink() ),
 		esc_attr( get_the_time() ),
 		esc_attr( get_the_date( 'c' ) ),
