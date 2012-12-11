@@ -582,7 +582,7 @@ function careerspark_posted_on() {
 	  <div class="meta-posted">
   	  <span class="sep">By </span> 
   	  <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span><span class="meta-posted-on">,
-  	    <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="by-author">
+  	    <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a>
   	  </span>
 	  </div>', 'careerspark' ),
 		esc_url( get_permalink() ),
