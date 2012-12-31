@@ -107,7 +107,10 @@ endif; // end check for removed header image
 
 <header id="branding" role="banner">
   <div class="branding-inner">
-    <h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+    <a id="site-title" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+      <img src="<?php echo get_template_directory_uri(); ?>/images/logo-white.png" alt="Career Spark" border="0" />
+      <h1><?php bloginfo( 'name' ); ?></h1>
+    </a>
     	
     <nav id="nav1">
   		<h3 class="assistive-text"><?php _e( 'Main menu', 'careerspark' ); ?></h3>
@@ -119,26 +122,28 @@ endif; // end check for removed header image
       ?>
       <div class="nav1-main">
         <a href="" id="nav1-alumni">
-          <h4>Alumni</h4>
-          <span>
-            Professional webpage
-          </span>
+          <div></div>
+          <h4>Talent</h4>
+          <p>
+            <span><span>professional webpages</span> of</span> skilled young people
+          </p>
         </a>
         <span class="sep">|</span>
         <a href="" id="nav1-employers">
+          <div></div>
           <h4>Employers</h4>
-          <span>
-            Hiring Young People
-          </span>
+          <p>
+            <span><span>private sector businesses</span></span> hiring young people
+          </p>
         </a>
         <span class="sep">|</span>
         <a href="" id="nav1-advice">
+          <div></div>
           <h4>Advice</h4>
-          <span>
-            
-          </span>
+          <p>
+            <span><span>career guidance,</span></span> articles &amp; discussion
+          </p>
         </a>
-        <span class="sep">|</span>
       </div>
     </nav>
     <div class="clear"></div>
