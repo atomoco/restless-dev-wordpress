@@ -54,15 +54,26 @@ h4:first-child {
 h1 {
   font-family:            'AsapBoldItalic', helvetica, arial, sans-serif;
   font-size:              1.7em;
+  line-height:            1.2;
 }
 h2 {
   font-size:              1.8em;
+  line-height:            1.2;
 }
 h3 {
   font-size:              1.4em;
+  line-height:            1.3;
 }
 h4 {
   font-size:              1.2em;
+}
+@media screen and (min-width: 960px) {
+  h1 {
+    font-size:            2.2em;
+  }
+  h3 {
+    font-size:            1.3em;
+  }
 }
 ul,ol {
   margin:                 1em;
@@ -93,6 +104,9 @@ a {
 
 #page {
   margin:                 0 10px 0;
+}
+#primary { 
+  position:               relative;
 }
 @media screen and (min-width: 320px) {
   #page {
@@ -348,6 +362,9 @@ a {
   .entry-content ol {
     padding-left:         90px;
   }
+  .post .entry-meta {
+    display:                none;
+  }
 }
 .post h1 {
   color:                  #30b3fc;
@@ -441,7 +458,8 @@ backgroundsize .entry-title:after {
 }
 .about-author .widget-title:after,
 .widget_categories .widget-title:after,
-.widget_wp_related_posts .widget-title:after {
+.widget_wp_related_posts .widget-title:after,
+.entry-content .related_post_title:after {
   content:                '';
   display:                inline-block;
   width:                  32px;
@@ -455,7 +473,8 @@ backgroundsize .entry-title:after {
 .widget_categories .widget-title:after {
   background-position:    -100px -66px;
 }
-.widget_wp_related_posts .widget-title:after {
+.widget_wp_related_posts .widget-title:after,
+.entry-content .related_post_title:after {
   background-position:    0 -100px;
 }
 
@@ -575,8 +594,8 @@ backgroundsize .entry-title:after {
 }
 .entry-content .related_post a {
   display:                block;
-  height:                 100%;
-  padding:                15px;
+  height:                 4em;
+  padding:                1em;
   color:                  #fff;
   background:             #ff1e30;
   font-family:            'AsapItalic', helvetica, arial, sans-serif;
@@ -635,13 +654,9 @@ backgroundsize .entry-title:after {
 
 #colophon {
   clear:                  both;
+  margin-top:             50px;
   padding-top:            40px;
-}
-@media screen and (min-width: 960px) {
-  #colophon {
-    width:                960px;
-    margin:               0 auto;
-  }
+  background:             #3572e1;
 }
 
 /* Assistive text */
@@ -661,6 +676,19 @@ backgroundsize .entry-title:after {
 	clip:                   auto !important;
 	font-size:              12px;
 	text-decoration:        underline;
+}
+
+/* edit link */
+
+.post-edit-link {
+  position:               absolute;
+  right:                  2px;
+  top:                    2px;
+  padding:                5px;
+  color:                  #fff;
+  background:             #666;
+  background:             rgba(0,0,0,0.7);
+  border-radius:          20px;
 }
 
 /* misc */
