@@ -69,7 +69,7 @@ endif; // end check for removed header image
 	?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <?php
-  if ( DESIGNSWITCH == 'high' ) {
+  if ( !function_exists('rd_designswitch_print_switch') OR DESIGNSWITCH == 'high' ) {
 ?>
 <link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
 <?php    
@@ -156,7 +156,9 @@ endif; // end check for removed header image
   <h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
 
 	<?php
-	  echo rd_designswitch_print_switch();
+  	if (function_exists('rd_designswitch_print_switch')) {
+    	echo rd_designswitch_print_switch();
+  	}
   ?>
 
 
