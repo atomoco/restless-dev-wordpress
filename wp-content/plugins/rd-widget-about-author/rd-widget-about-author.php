@@ -52,7 +52,7 @@ class rd_widget_about_author extends WP_Widget {
       }
       
       // only show on a singular post page
-      if (!is_singular()) {
+      if (!is_single()) {
         return;
       }
 

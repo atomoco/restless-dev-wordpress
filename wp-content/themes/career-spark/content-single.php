@@ -19,6 +19,17 @@
 		<?php endif; ?>
 	</header><!-- .entry-header -->
 	
+	<div class="fixed">
+  	<div class="fixed-inner">
+    	<aside class="social">
+    	
+    	  <a href="" class="button"><span class="icon-button-mail"></span>Email page</a>
+      	<div class="fb-like" data-href="<?=get_permalink( $post->ID )?>" data-send="false" data-width="50" data-show-faces="false" data-font="arial"></div>
+      	
+    	</aside>
+  	</div>
+	</div>
+	
 	<div class="entry-meta">
 		<?php
 			/* translators: used between list items, there is a space after the comma */

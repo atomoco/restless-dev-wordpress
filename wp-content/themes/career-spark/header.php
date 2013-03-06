@@ -8,32 +8,6 @@
  * @subpackage Career_Spark
  * @since Career Spark 1.0
  */
-
-// HEADER IMAGE
-
-// Check to see if the header image has been removed
-$header_image = get_header_image();
-if ( $header_image AND DESIGNSWITCH == 'high' ) :
-  $header_image_width = HEADER_IMAGE_WIDTH;
-	// The header image
-	// Check if this is a post or page, if it has a thumbnail, and if it's a big one
-	if ( is_singular() && has_post_thumbnail( $post->ID ) &&
-			( /* $src, $width, $height */ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), array( $header_image_width, $header_image_width ) ) ) &&
-			$image[1] >= $header_image_width ) :
-		// Houston, we have a new header image!
-		echo get_the_post_thumbnail( $post->ID, 'post-thumbnail' );
-	else :
-		// Compatibility with versions of WordPress prior to 3.4.
-		if ( function_exists( 'get_custom_header' ) ) {
-			$header_image_width  = get_custom_header()->width;
-			$header_image_height = get_custom_header()->height;
-		} else {
-			$header_image_width  = HEADER_IMAGE_WIDTH;
-			$header_image_height = HEADER_IMAGE_HEIGHT;
-		}
-  endif; // end check for featured image or standard header
-  $header_image = 'background:url(' . get_header_image() . ')';
-endif; // end check for removed header image
 			
 ?><!DOCTYPE html>
 <!--[if lt IE 7 ]> <html <?php language_attributes(); ?> class="no-js ie6"> <![endif]-->
@@ -101,16 +75,33 @@ endif; // end check for removed header image
 ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> id="<?php echo get_option('current_page_template'); ?>">
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <a name="top"></a>
 
-<header id="branding" role="banner">
-  <div class="branding-inner">
+<header id="logo" class="fixed">
+  <div class="fixed-inner">
     <a id="site-title" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
       <img src="<?php echo get_template_directory_uri(); ?>/images/logo-white.png" alt="Career Spark" border="0" />
       <h1><?php bloginfo( 'name' ); ?></h1>
+      <span id="logo-back1"></span>
+      <span id="logo-back2"></span>
     </a>
+  </div>
+</header>
+
+
+<header id="branding" role="banner">
+  <div class="branding-inner">
     	
     <nav id="nav1">
   		<h3 class="assistive-text"><?php _e( 'Main menu', 'careerspark' ); ?></h3>
@@ -121,6 +112,14 @@ endif; // end check for removed header image
         //wp_nav_menu( array( 'theme_location' => 'primary' ) ); 
       ?>
       <div class="nav1-main">
+        <a href="" id="nav1-advice">
+          <div></div>
+          <h4>Advice</h4>
+          <p>
+            <span><span>career guidance,</span></span> articles &amp; discussion
+          </p>
+        </a>
+        <span class="sep">|</span>
         <a href="" id="nav1-alumni">
           <div></div>
           <h4>Talent</h4>
@@ -136,14 +135,6 @@ endif; // end check for removed header image
             <span><span>private sector businesses</span></span> hiring young people
           </p>
         </a>
-        <span class="sep">|</span>
-        <a href="" id="nav1-advice">
-          <div></div>
-          <h4>Advice</h4>
-          <p>
-            <span><span>career guidance,</span></span> articles &amp; discussion
-          </p>
-        </a>
       </div>
     </nav>
     <div class="clear"></div>
@@ -151,7 +142,7 @@ endif; // end check for removed header image
 </header>
 
 
-<div id="page">
+<div id="container">
 
   <h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
 
@@ -163,3 +154,12 @@ endif; // end check for removed header image
 
 
 	<div id="main">
+	
+   <?php 
+     $breadcrumb = breadcrumb_trail();
+     if (is_single()) {
+	     echo str_replace('You\'re in:</b>', 'You\'re in:</b> <a href="/advice/">Advice</a> <span class="breadcrumb-sep">/</span> ', $breadcrumb);
+     } else {
+	     echo $breadcrumb;
+     }
+   ?>

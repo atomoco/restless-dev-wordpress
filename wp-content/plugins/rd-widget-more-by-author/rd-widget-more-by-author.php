@@ -22,7 +22,7 @@ class rd_widget_more_by_author extends WP_Widget {
       global $post,$authordata;
       
       // only show on a singular post page
-      if (!is_singular()) {
+      if (!is_single()) {
         return;
       }
 

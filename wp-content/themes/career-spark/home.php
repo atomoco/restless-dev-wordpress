@@ -1,5 +1,6 @@
 <?php
 /**
+ * Template Name: Homepage Template
  * The template for displaying all pages.
  *
  * This is the template that displays all pages by default.
@@ -12,7 +13,7 @@
  * @since Career Spark 1.0
  */
 
-update_option('current_page_template','page');
+update_option('current_page_template','home');
 
 get_header(); ?>
 
@@ -21,9 +22,7 @@ get_header(); ?>
 
 				<?php while ( have_posts() ) : the_post(); ?>
 
-					<?php get_template_part( 'content', 'page' ); ?>
-
-					<?php comments_template( '', true ); ?>
+					<?php get_template_part( 'content', 'home' ); ?>
 
 				<?php endwhile; // end of the loop. ?>
 

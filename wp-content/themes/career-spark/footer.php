@@ -30,6 +30,13 @@
 		</div>
 </footer><!-- #colophon -->
 
+<script type='text/javascript'>
+  //<![CDATA[
+    window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js">\x3C/script>')
+  //]]>
+</script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/logo-fixed.js" type="text/javascript"></script>
+
 <?php wp_footer(); ?>
 
 </body>
