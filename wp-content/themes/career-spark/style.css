@@ -424,17 +424,22 @@ a {
   .social {
     position:             absolute;
     left:                 0;
-    top:                  250px;
+    top:                  230px;
     z-index:              3;
+    width:                142px;
     margin:               0;
+    text-align:           center;
   }
 }
 
 .social .fb-like {
-  width:                  50px;
+  width:                  55px;
   height:                 25px;
   overflow:               hidden;
   vertical-align:         middle;
+}
+.social .fb_edge_widget_with_comment {
+  width:                  100px;
 }
 
 

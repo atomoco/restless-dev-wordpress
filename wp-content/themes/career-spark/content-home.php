@@ -7,7 +7,22 @@
  * @since Career Spark 1.0
  */
 ?>
+
+<meta property="og:type"        content="website"> 
+<meta property="og:url"         content="http://career-spark.ug"> 
+<meta property="og:image"       content="wp-content/themes/<?php echo get_template(); ?>/images/logo-orange.png">
+<meta property="og:title"       content="CareerSpark">
+<meta property="og:description" content="CareerSpark is an online platform providing information, ideas and connections to enable you to build and develop your career. Careerspark is powered by Restless Development with support from a network of partners committed to youth development in Uganda."> 
+
 <article>
+
+  <div class="fixed">
+  	<div class="fixed-inner">
+    	<aside class="social">
+      	<div class="fb-like" data-href="http://www.career-spark.ug" data-send="false" data-layout="button_count" data-width="142" data-show-faces="false" data-font="arial"></div>
+    	</aside>
+  	</div>
+  </div>
 
   <section id="post-<?php the_ID(); ?>" class="" <?php post_class(); ?>>
   	<header class="home-header">
@@ -87,6 +102,14 @@ or 2727 Muyenga Road, Kampala</p>
      <ul>
       <li>Articles for young people who are studying, working, job hunting and self-employed</li>
       <li>A directory of companies hiring young professionals</li>
-      <li>Articles for young people who are studying, working, job hunting and self-employed</li>
+      <li>Web pages of young professionals seeking employment</li>
      </ul>
+     
+     <!--
+     
+     <h2>Find CareerSpark on Facebook</h2>
+     
+     <div class="fb-like-box" data-href="http://www.facebook.com/platform" data-width="555" data-show-faces="true" data-stream="false" data-border-color="#F9F9F9" data-header="false"></div>
+     
+     -->
     
