@@ -1,11 +1,17 @@
 $(document).ready( function() {
 
   var redTop = $('.container-red .top');
-  var redTopOff = redTop.offset().top;
+  if (redTop.length > 0) {
+    var redTopOff = redTop.offset().top;
+  }
   var redBottom = $('.container-red .bottom');
-  var redBottomOff = redBottom.offset().top;
+  if (redBottom.length > 0) {
+    var redBottomOff = redBottom.offset().top;
+  }
   var footerTop = $('#colophon');
-  var footerTopOff = footerTop.offset().top;
+  if (footerTop.length > 0) {
+    var footerTopOff = footerTop.offset().top;
+  }
 
   $(window).scroll(function(){
     
