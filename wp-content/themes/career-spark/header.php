@@ -112,27 +112,30 @@
         //wp_nav_menu( array( 'theme_location' => 'primary' ) ); 
       ?>
       <div class="nav1-main">
-        <a href="" id="nav1-advice">
+        <a name="advice" id="nav1-advice">
           <div></div>
           <h4>Advice</h4>
           <p>
-            <span><span>career guidance,</span></span> articles &amp; discussion
+            coming very soon!
+            <!--<span><span>career guidance,</span></span> articles &amp; discussion-->
           </p>
         </a>
         <span class="sep">|</span>
-        <a href="" id="nav1-alumni">
+        <a name="talent" id="nav1-alumni">
           <div></div>
           <h4>Talent</h4>
           <p>
-            <span><span>professional webpages</span> of</span> skilled young people
+            coming soon!
+            <!--<span><span>young professionals</span></span> seeking employment-->
           </p>
         </a>
         <span class="sep">|</span>
-        <a href="" id="nav1-employers">
+        <a name="employers" id="nav1-employers">
           <div></div>
           <h4>Employers</h4>
           <p>
-            <span><span>private sector businesses</span></span> hiring young people
+            coming soon!
+            <!--<span><span>companies hiring young</span></span> professionals-->
           </p>
         </a>
       </div>
@@ -142,7 +145,7 @@
 </header>
 
 
-<div id="container">
+<div id="container" class="container-content1">
 
   <h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
 

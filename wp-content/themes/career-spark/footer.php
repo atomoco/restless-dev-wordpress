@@ -14,7 +14,21 @@
 
 </div><!-- #page -->
 
-<footer id="colophon" class="container_12" role="contentinfo">
+<footer id="colophon" role="contentinfo">
+  <div class="container-wide">
+  
+    <h1>Career Spark</h1>
+    
+    <h4 class="outro">
+      Careerspark is an online platform providing information, ideas and connections to enable you to build and develop your career. 
+      Careerspark is powered by <a href="http://www.restlessdevelopment.org" target="_blank">Restless Development</a> with support from a network of partners committed to youth development in Uganda.
+    </h4>
+    
+    <div class="partners partners-primary">
+      <a href="http://www.restlessdevelopment.org" class="partner-rd" target="_blank">Restless Development</a>
+      <span class="sep">|</span>
+      <a href="http://forwardfoundation.org.uk" class="partner-ff" target="_blank">Forward Foundation</a>
+    </div>
 
 		<?php
 			/* A sidebar in the footer? Yep. You can can customize
@@ -26,8 +40,9 @@
 
 		<div id="site-generator">
 			<?php do_action( 'careerspark_credits' ); ?>
-			<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'careerspark' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'careerspark' ); ?>" rel="generator"><?php printf( __( 'Proudly powered by %s', 'careerspark' ), 'WordPress' ); ?></a>
+			<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'careerspark' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'careerspark' ); ?>" rel="generator"><?php printf( __( 'Powered by %s', 'careerspark' ), 'WordPress' ); ?></a>
 		</div>
+  </div>
 </footer><!-- #colophon -->
 
 <script type='text/javascript'>

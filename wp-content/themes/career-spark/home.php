@@ -17,8 +17,7 @@ update_option('current_page_template','home');
 
 get_header(); ?>
 
-		<div id="primary">
-			<div id="content" role="main">
+		<div>
 
 				<?php while ( have_posts() ) : the_post(); ?>
 
@@ -26,7 +25,6 @@ get_header(); ?>
 
 				<?php endwhile; // end of the loop. ?>
 
-			</div><!-- #content -->
 		</div><!-- #primary -->
 
 <?php get_footer(); ?>
