@@ -8,12 +8,6 @@
  */
 ?>
 
-<meta property="og:type"        content="website"> 
-<meta property="og:url"         content="http://career-spark.ug"> 
-<meta property="og:image"       content="wp-content/themes/<?php echo get_template(); ?>/images/logo-orange.png">
-<meta property="og:title"       content="CareerSpark">
-<meta property="og:description" content="CareerSpark is an online platform providing information, ideas and connections to enable you to build and develop your career. Careerspark is powered by Restless Development with support from a network of partners committed to youth development in Uganda."> 
-
 <article>
 
   <div class="fixed">
@@ -61,8 +55,8 @@
     	   <li>Have a strong work ethic and a commitment to community development</li>
     	 </ul>
   	 
+       <h3>Our internship partners:</h3>
     	 <div class="internship-partners">
-      	 <h3>Our internship partners:</h3>
          <a href="http://www.usaid.gov" class="partner-usaid" target="_blank">USAID</a><span class="sep">|</span><a href="http://www.iyfnet.org" class="partner-iyf" target="_blank">International Youth Foundation</a>
     	 </div>
     	 
@@ -105,11 +99,8 @@ or 2727 Muyenga Road, Kampala</p>
       <li>Web pages of young professionals seeking employment</li>
      </ul>
      
-     <!--
-     
+     <br />
      <h2>Find CareerSpark on Facebook</h2>
      
-     <div class="fb-like-box" data-href="http://www.facebook.com/platform" data-width="555" data-show-faces="true" data-stream="false" data-border-color="#F9F9F9" data-header="false"></div>
-     
-     -->
+     <div class="fb-like-box" data-href="http://www.facebook.com/pages/Career-Spark/129083250596614" data-width="555" data-show-faces="true" data-stream="false" data-border-color="#F9F9F9" data-header="false"></div>
     
