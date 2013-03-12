@@ -70,7 +70,7 @@ h4 {
   }
 }
 ul,ol {
-  margin:                 1em;
+  margin:                 1em 1em 1em 22px;
   padding:                0;
 }
 ul li {
@@ -440,6 +440,11 @@ a {
 }
 .social .fb_edge_widget_with_comment {
   width:                  100px;
+}
+
+.fb_iframe_widget {
+  max-width:              100%;
+  overflow:               hidden;
 }
 
 
@@ -887,9 +892,6 @@ backgroundsize .entry-content > p:first-child:before {
   padding:                0 0 70px;
   background-position:    50% 100%;
 }
-.container-red ul {
-  margin-left:            0;
-}
 .container-red ul li:before {
   color:                  #fc0;
 }
@@ -911,6 +913,10 @@ backgroundsize .entry-content > p:first-child:before {
   padding:                0 0 0 30px;
   background:             transparent url(images/icon-red-tel.png) no-repeat;
 }
+.internship-partners {
+  background:             #fff;
+  text-align:             center;
+}
 .internship-partners .sep {
   display:                none;
 }
@@ -930,6 +936,9 @@ backgroundsize .entry-content > p:first-child:before {
   background:             transparent url(images/partner-iyf.png);
 }
 @media screen and (min-width: 945px) {
+  .container-red ul {
+    margin-left:          0;
+  }
   .container-red .container-content1 {
     background:           transparent url(images/back-red-smiley.png) no-repeat -20px 0;
   }
