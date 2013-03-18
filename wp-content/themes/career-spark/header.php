@@ -8,6 +8,12 @@
  * @subpackage Career_Spark
  * @since Career Spark 1.0
  */
+ 
+if ($_SERVER['SERVER_NAME']=='81.91.243.58') {
+  header("HTTP/1.1 301 Moved Permanently"); 
+  header("Location: http://career-spark.ug"); 
+  exit;
+}
 			
 ?><!DOCTYPE html>
 <!--[if lt IE 7 ]> <html <?php language_attributes(); ?> class="no-js ie6"> <![endif]-->
