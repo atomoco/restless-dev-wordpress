@@ -40,7 +40,6 @@
 
 		<div id="site-generator">
 			<?php do_action( 'careerspark_credits' ); ?>
-			<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'careerspark' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'careerspark' ); ?>" rel="generator"><?php printf( __( 'Powered by %s', 'careerspark' ), 'WordPress' ); ?></a>
 		</div>
   </div>
 </footer><!-- #colophon -->

@@ -64,9 +64,9 @@ if (!isset($options['count'])) {$options['count'] = "off";}
 		}
 		if ($options['title'] != '') {
 			if ($options['titleclass'] == '') {
-				$commenttitle = "<h3>";
+				$commenttitle = "<h3 class='fb-comment-title'>";
 			} else {
-				$commenttitle = "<h3 class=\"".$options['titleclass']."\">";
+				$commenttitle = "<h3 class=\"fb-comment-title ".$options['titleclass']."\">";
 			}
 			$commenttitle .= $options['title']."</h3>";
 		}

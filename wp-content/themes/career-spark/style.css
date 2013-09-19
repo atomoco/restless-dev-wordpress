@@ -443,6 +443,9 @@ a {
 .social .fb_edge_widget_with_comment {
   width:                  100px;
 }
+.single-post .social .fb_edge_widget_with_comment {
+  width:                  55px;
+}
 
 .fb-like-box,
 .fb_iframe_widget {
@@ -667,6 +670,11 @@ backgroundsize .entry-content > p:first-child:before {
   .about-author img {
     width:                70px;
     height:               70px;
+  }
+  .about-author-avatar-big,
+  .about-author-big img {
+    width:                120px;
+    height:               120px;
   }
 }
 
@@ -957,6 +965,13 @@ backgroundsize .entry-content > p:first-child:before {
   }
 }
 
+
+/* Author page */
+
+.author-articles h3 {
+  display: inline;
+}
+
 /* Assistive text */
 .assistive-text {
 	position:               absolute !important;
@@ -1022,4 +1037,29 @@ backgroundsize .entry-content > p:first-child:before {
   clear:                  both;
   height:                 1px;
   overflow:               hidden;
+}
+
+.fb-comment-title {
+
+  clear: both;
+  padding-top:20px;
+  
+}
+
+.articles-index h4 {
+  margin: 0;
+  font-size: 16px;
+  display: inline;
+}
+.articles-index small {
+  color: #999;
+  font-size: 12px;
+}
+
+.articles-index a {
+  color:#333;
+  text-decoration: none;
+}
+.articles-index a:hover {
+  color:#f00;
 }

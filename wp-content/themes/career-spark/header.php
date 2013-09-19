@@ -131,12 +131,11 @@ if ($_SERVER['SERVER_NAME']=='81.91.243.58') {
         //wp_nav_menu( array( 'theme_location' => 'primary' ) ); 
       ?>
       <div class="nav1-main">
-        <a name="advice" id="nav1-advice">
+        <a name="advice" id="nav1-advice" href="/?page_id=116">
           <div></div>
           <h4>Advice</h4>
           <p>
-            coming very soon!
-            <!--<span><span>career guidance,</span></span> articles &amp; discussion-->
+            <span><span>career guidance,</span></span> articles &amp; discussion
           </p>
         </a>
         <span class="sep">|</span>
