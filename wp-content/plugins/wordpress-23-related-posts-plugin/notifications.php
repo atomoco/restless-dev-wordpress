@@ -38,7 +38,7 @@ function wp_rp_print_notifications() {
 
 	foreach($messages as $id => $text) {
 		echo '<div class="wp_rp_notification">
-			<a href="' . admin_url('admin-ajax.php?action=rp_dismiss_notification&id=' . $id) . '" class="close">x</a>
+			<a href="' . admin_url('admin-ajax.php?action=rp_dismiss_notification&id=' . $id . '&_wpnonce=' . wp_create_nonce("wp_rp_ajax_nonce")) . '" class="close">x</a>
 			<p>' . $text . '</p>
 		</div>';
 	}
@@ -66,7 +66,7 @@ function wp_rp_load_remote_notifications() {
 		'timeout' => 5
 	);
 
-	if(empty($blog_id) || empty($auth_key) || !$options['ctr_dashboard_enabled']) return;
+	if(!$blog_id || !$auth_key || !$options['ctr_dashboard_enabled']) return;
 
 	// receive remote recommendations
 	$url = WP_RP_CTR_DASHBOARD_URL . "notifications/?blog_id=$blog_id&auth_key=$auth_key";
@@ -111,12 +111,6 @@ function wp_rp_load_remote_notifications() {
 					$meta['show_blogger_network_form'] = true;
 				} else if(isset($data->hide_blogger_network_form) && $data->hide_blogger_network_form) {
 					$meta['show_blogger_network_form'] = false;
-				}
-
-				if(isset($data->show_RP_in_posts) && $data->show_RP_in_posts) {
-					$options['show_RP_in_posts'] = true;
-				} else if(isset($data->hide_RP_in_posts) && $data->hide_RP_in_posts) {
-					$options['show_RP_in_posts'] = false;
 				}
 
 				if(isset($data->show_traffic_exchange) && $data->show_traffic_exchange) {

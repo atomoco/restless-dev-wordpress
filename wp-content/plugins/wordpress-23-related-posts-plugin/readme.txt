@@ -1,11 +1,10 @@
 ﻿=== Plugin Name ===
-Contributors: jureham
+Contributors: zemanta
 Tags: related,posts,post,related posts,plugin
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LB3MVPLUAWCY6
 License: GPLv2
 Requires at least: 3.3
-Tested up to: 3.5
-Stable tag: 2.2
+Tested up to: 3.6
+Stable tag: 2.8
 
 WordPress Related Posts generates a list of related posts with thumbnails and gives you click-through statistics.
 
@@ -39,28 +38,84 @@ It places a list of links with thumbnails at the bottom of your posts. It increa
 
 Yes, related posts are responsive so they adapt to the screen size to ensure maximum click-through rates.
 
+= Why does Zemanta have 3 similar plugins? What's the difference between them? =
+
+We adopted the principle of having three "release channels". You can try the most experimental (still stable!) features in [Related Posts](http://wordpress.org/extend/plugins/related-posts/ "Related Posts"). The more advanced ones are in [WordPress Related Posts](http://wordpress.org/extend/plugins/wordpress-23-related-posts-plugin/ "WordPress Related Posts"). If you're looking for the Professional version go for [Related Posts by Zemanta](http://wordpress.org/extend/plugins/related-posts-by-zemanta/ "Related Posts by Zemanta").
+
 == Installation ==
 
 = Via admin: =
 1. Go to Plugins -> Add New
 2. Search for WordPress Related Posts
-3. Install and activate the first result
-4. After installation go to Settings -> Related Posts in your plugins list to turn on Thumbnails & Statistics
-5. Done!
+3. Install the plugin called "WordPress Related Posts" and activate it
+4. After activation click Turn on to get advanced features
+5. If you use any caching plugin please clear the cache
+6. Done!
 
 = Via upload: =
 1. Download the plugin .zip file
 2. Log in to yourdomain.com/wp-admin
 3. Click Plugins -> Add New -> Upload
-4. After installation go to Settings -> Related Posts in your plugins list to turn on Thumbnails & Statistics
-5. You're finished!
+4. After installation activate the plugin and click Turn on to get advanced features
+5. If you use any caching plugin please clear the cache
+6. You're finished!
 
 == Screenshots ==
 1. WordPress Related Posts Default Theme.
 2. WordPress Related Posts reporting real time statistics for mobile and desktop devices.
 3. WordPress Related Posts responsive theme on a Galaxy Nexus and iPhone 4s.
 
+== Upgrade Notice ==
+
+= 2.7 =
+New thumbnailer might break backwards compatibility for blogs with custom thumbnail sizes since it resizes all thumbnails to 150x150.
+
+= 2.6.2 =
+Fix for security vulnerability. Upgrade immediately.
+
 == Changelog ==
+
+= 2.8 =
+* New thumbnailer
+* Edit Related Posts gets a visual upgrade, search functionality and a dose of awesome
+* Removed AB testing on mobile infinite stream
+* Bugfix in tag generator
+
+= 2.7 =
+* Improved thumbnailer
+
+= 2.6.3 =
+* Due to popular demand, "Edit related posts" is back in action. Send us more feedback to support@zemanta.com. Thanks!
+
+= 2.6.2 =
+* Fix for Cross-Site Request Forgery vulnerability. Credits for finding and reporting the vulnerability go to Charlie Eriksen via Secunia SVCRP.
+
+= 2.6.1 =
+* Fixed post excerpt bug
+* Link back to Zemanta is off by default
+* Removed "edit related posts" functionality (already edited posts won't revert back)
+
+= 2.6 =
+* Improved editorial control
+* Changed plugin content filter priority from 101 to 10
+* Improved AB testing on mobile infinite stream
+* Bugfixes
+
+= 2.5 =
+* Mobile themes settings
+* Editorial control
+* New Pinterest inspired theme
+* Support us by displaying our logo (opt-in)
+* Small output html layout change
+* Bugfixes
+
+= 2.4 =
+* Limit related post age
+* Bugfix for thumbnail extraction
+
+= 2.3 =
+* Earn money by displaying promoted content
+* Bugfixes
 
 = 2.2 =
 * Updated theme settings with one new theme

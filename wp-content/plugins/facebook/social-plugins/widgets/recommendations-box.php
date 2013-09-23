@@ -3,18 +3,22 @@
 /**
  * Adds the Recommendations Social Plugin as a WordPress Widget
  *
- * @since 1.0
+ * @since 1.1
  */
 class Facebook_Recommendations_Widget extends WP_Widget {
 
 	/**
 	 * Register widget with WordPress
+	 *
+	 * @since 1.1
+	 *
+	 * @return void
 	 */
 	public function __construct() {
 		parent::__construct(
 	 		'facebook-recommendations', // Base ID
 			__( 'Facebook Recommendations', 'facebook' ), // Name
-			array( 'description' => __( 'Shows personalized recommendations to your users.', 'facebook' ), ) // Args
+			array( 'description' => __( 'Shows personalized recommendations to your users.', 'facebook' ) ) // Args
 		);
 	}
 
@@ -23,8 +27,11 @@ class Facebook_Recommendations_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::widget()
 	 *
+	 * @since 1.1
+	 *
 	 * @param array $args     Widget arguments.
 	 * @param array $instance Saved values from database.
+	 * @return void
 	 */
 	public function widget( $args, $instance ) {
 		extract( $args );
@@ -60,39 +67,52 @@ class Facebook_Recommendations_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::update()
 	 *
+	 * @since 1.1
+	 *
 	 * @param array $new_instance Values just sent to be saved.
 	 * @param array $old_instance Previously saved values from database.
 	 *
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		if ( ! class_exists( 'Facebook_Recommendations_Box' ) )
-			require_once( dirname( dirname( __FILE__ ) ) . '/class-facebook-recommendations-box.php' );
-
 		$instance = array();
+		$new_instance = (array) $new_instance;
+
 		if ( ! empty( $new_instance['title'] ) )
 			$instance['title'] = strip_tags( $new_instance['title'] );
+
+		if ( isset( $new_instance['header'] ) )
+			$new_instance['header'] = true;
+		else
+			$new_instance['header'] = false;
+
+		foreach( array( 'width', 'height', 'max_age' ) as $option ) {
+			if ( isset( $new_instance[ $option ] ) )
+				$new_instance[ $option ] = absint( $new_instance[ $option ] );
+		}
+
+		if ( ! class_exists( 'Facebook_Recommendations_Box' ) )
+			require_once( dirname( dirname( __FILE__ ) ) . '/class-facebook-recommendations-box.php' );
 
 		$box = Facebook_Recommendations_Box::fromArray( $new_instance );
 		if ( $box ) {
 			$box_options = $box->toHTMLDataArray();
 
 			if ( isset( $box_options['header'] ) ) {
-				if ( $box_options['header'] === 'false' )
-					$box_options['header'] = false;
-				else
+				if ( $box_options['header'] === 'true' )
 					$box_options['header'] = true;
+				else if ( $box_options['header'] === 'false' )
+					$box_options['header'] = false;
 			}
-			if ( isset( $box_options['border-color'] ) ) {
-				$box_options['border_color'] = $box_options['border-color'];
-				unset( $box_options['border-color'] );
-			}
+
 			if ( isset( $box_options['max-age'] ) ) {
 				$box_options['max_age'] = absint( $box_options['max-age'] );
 				unset( $box_options['max-age'] );
 			}
+
 			foreach( array( 'width', 'height' ) as $option ) {
-				$box_options[$option] = absint( $box_options[$option] );
+				if ( isset( $box_options[ $option ] ) )
+					$box_options[ $option ] = absint( $box_options[ $option ] );
 			}
 
 			return array_merge( $instance, $box_options );
@@ -106,27 +126,39 @@ class Facebook_Recommendations_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::form()
 	 *
+	 * @since 1.1
+	 *
 	 * @param array $instance Previously saved values from database.
+	 * @return void
 	 */
 	public function form( $instance ) {
-		$this->display_title( isset( $instance['title'] ) ? $instance['title'] : '' );
+		$instance = wp_parse_args( (array) $instance, array(
+			'title' => '',
+			'max_age' => 0,
+			'width' => 0,
+			'height' => 0,
+			'font' => '',
+			'colorscheme' => 'light'
+		) );
+		$this->display_title( $instance['title'] );
 		$this->display_header( isset( $instance['header'] ) && ( $instance['header'] === true || $instance['header'] == '1' || $instance['header'] === 'true' ) );
-		$this->display_max_age( isset( $instance['max_age'] ) ? absint( $instance['max_age'] ) : 0 );
-		$this->display_width( isset( $instance['width'] ) ? absint( $instance['width'] ) : 0 );
-		$this->display_height( isset( $instance['height'] ) ? absint( $instance['height'] ) : 0 );
-		$this->display_font( isset( $instance['font'] ) ? $instance['font'] : '' );
+		$this->display_max_age( absint( $instance['max_age'] ) );
+		$this->display_width( absint( $instance['width'] ) );
+		$this->display_height( absint( $instance['height'] ) );
+		$this->display_font( $instance['font'] );
 		echo '<p></p>';
-		$this->display_colorscheme( isset( $instance['colorscheme'] ) ? $instance['colorscheme'] : '' );
-		echo '<p></p>';
-		$this->display_border_color( isset( $instance['border_color'] ) ? $instance['border_color'] : '' );
+		$this->display_colorscheme( $instance['colorscheme'] );
 	}
 
 	/**
-	 * Allow a publisher to customize the title displayed above the widget area
-	 * e.g. Things we hope you will like
+	 * Allow a publisher to customize the title displayed above the widget area.
+	 *
+	 * e.g. Things we hope you will like.
 	 *
 	 * @since 1.1
+	 *
 	 * @param string $existing_value saved title
+	 * @return void
 	 */
 	public function display_title( $existing_value = '' ) {
 		echo '<p><label>' . esc_html( __( 'Title', 'facebook' ) ) . ': ';
@@ -137,23 +169,28 @@ class Facebook_Recommendations_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Show the Facebook header
-	 * Works best when you don't set your own widget title
+	 * Show the Facebook header.
+	 *
+	 * Works best when you don't set your own widget title.
 	 *
 	 * @since 1.1
+	 *
 	 * @param bool $true_false
+	 * @return void
 	 */
 	public function display_header( $true_false ) {
 		echo '<p><label><input type="checkbox" id="' . $this->get_field_id( 'header' ) . '" name="' . $this->get_field_name( 'header' ) . '"';
 		checked( $true_false );
-		echo ' value="1" /> ' . __( 'Include Facebook header', 'facebook' ) . '</label></p>';
+		echo ' value="1" /> ' . esc_html( __( 'Include Facebook header', 'facebook' ) ) . '</label></p>';
 	}
 
 	/**
-	 * Specify the width of the recommendations box in whole pixels
+	 * Specify the width of the recommendations box in whole pixels.
 	 *
 	 * @since 1.1
+	 *
 	 * @param int $existing_value previously stored value
+	 * @return void
 	 */
 	public function display_width( $existing_value = 300 ) {
 		if ( $existing_value < 200 )
@@ -162,10 +199,12 @@ class Facebook_Recommendations_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Specify the height of the recommendations box in whole pixels
+	 * Specify the height of the recommendations box in whole pixels.
 	 *
 	 * @since 1.1
+	 *
 	 * @param int $existing_value previously stored value
+	 * @return void
 	 */
 	public function display_height( $existing_value = 300 ) {
 		if ( $existing_value < 200 )
@@ -174,10 +213,11 @@ class Facebook_Recommendations_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Choose a font
+	 * Choose a font.
 	 *
 	 * @since 1.1
 	 * @param string $existing_value stored font value
+	 * @return void
 	 */
 	public function display_font( $existing_value = '' ) {
 		if ( ! class_exists( 'Facebook_Social_Plugin_Settings' ) )
@@ -187,10 +227,12 @@ class Facebook_Recommendations_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Choose a light or dark color scheme
+	 * Choose a light or dark color scheme.
 	 *
 	 * @since 1.1
+	 *
 	 * @param string $existing_value saved colorscheme value
+	 * @return void
 	 */
 	public function display_colorscheme( $existing_value = 'light' ) {
 		if ( ! class_exists( 'Facebook_Social_Plugin_Settings' ) )
@@ -202,27 +244,12 @@ class Facebook_Recommendations_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Choose a custom border color
-	 * Note: we purposely do not set input[type=color] since an empty string is not a valid value for that field
-	 *
-	 * @since 1.1
-	 * @link http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#color-state-(type=color) WHATWG input[type=color]
-	 * @param string $existing_value stored value
-	 */
-	public function display_border_color( $existing_value = '' ) {
-		echo '<p><label>' . esc_html( __( 'Border color', 'facebook' ) ) . ': <input type="text" size="8" maxlength="7" id="' . $this->get_field_id( 'border_color' ) . '" name="' . $this->get_field_name( 'border_color' ) . '" placeholder="#000000"';
-		if ( $existing_value )
-			echo ' value="' . esc_attr( $existing_value ) . '" /></label> <span style="background-color:' . esc_attr( $existing_value ) . ';min-width:2em;"></span>';
-		else
-			echo ' /></label>';
-		echo '</p>';
-	}
-
-	/**
 	 * Limit articles displayed in recommendations box to last N days where N is a number between 0 (no limit) and 180.
 	 *
 	 * @since 1.1
+	 *
 	 * @param int $existing_value stored value
+	 * @return void
 	 */
 	public function display_max_age( $existing_value = 0 ) {
 		echo '<p><label>' . esc_html( __( 'Maximum age', 'facebook' ) ) . ': ';

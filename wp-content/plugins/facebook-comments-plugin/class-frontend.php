@@ -64,9 +64,9 @@ if (!isset($options['count'])) {$options['count'] = "off";}
 		}
 		if ($options['title'] != '') {
 			if ($options['titleclass'] == '') {
-				$commenttitle = "<h3 class='fb-comment-title'>";
+				$commenttitle = "<h3>";
 			} else {
-				$commenttitle = "<h3 class=\"fb-comment-title ".$options['titleclass']."\">";
+				$commenttitle = "<h3 class=\"".$options['titleclass']."\">";
 			}
 			$commenttitle .= $options['title']."</h3>";
 		}
@@ -124,11 +124,9 @@ function fbcommentshortcode($fbatts) {
     $fbcommentbox .= "<fb:comments href=\"".$url."\" num_posts=\"".$fbcomments[num]."\" width=\"".$fbcomments[width]."\" colorscheme=\"".$fbcomments[scheme]."\"></fb:comments>";
      }
 
-    if ($options['linklove'] != 'no') {
-        if ($options['linklove'] != 'off') {
-            if (empty($fbcomments[linklove])) {
+	if (!empty($fbcomments[linklove])) {
       $fbcommentbox .= '<p>Powered by <a href="http://3doordigital.com/wordpress/plugins/facebook-comments/">Facebook Comments</a></p>';
-    }}}
+	}
   return $fbcommentbox;
 }
 add_filter('widget_text', 'do_shortcode');

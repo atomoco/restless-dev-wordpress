@@ -3,28 +3,45 @@
 if ( ! class_exists( 'Facebook_Social_Plugin_Settings' ) )
 	require_once( dirname(__FILE__) . '/settings-social-plugin.php' );
 
+/**
+ * Customize Comments Box Facebook social plugin parameters
+ *
+ * @since 1.1
+ */
 class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 
 	/**
-	 * Setting page identifier
+	 * Setting page identifier.
 	 *
 	 * @since 1.1
+	 *
 	 * @var string
 	 */
 	const PAGE_SLUG = 'facebook-comments';
 
 	/**
-	 * Define our option array value
+	 * Define our option array value.
 	 *
 	 * @since 1.1
+	 *
 	 * @var string
 	 */
 	const OPTION_NAME = 'facebook_comments';
 
 	/**
-	 * Initialize with an options array
+	 * The hook suffix assigned by add_submenu_page()
 	 *
 	 * @since 1.1
+	 *
+	 * @var string
+	 */
+	protected $hook_suffix = '';
+
+	/**
+	 * Initialize with an options array.
+	 *
+	 * @since 1.1
+	 *
 	 * @param array $options existing options
 	 */
 	public function __construct( $options = array() ) {
@@ -37,9 +54,10 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Reference the social plugin by name
+	 * Reference the social plugin by name.
 	 *
 	 * @since 1.1
+	 *
 	 * @return string social plugin name
 	 */
 	public static function social_plugin_name() {
@@ -47,9 +65,10 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Navigate to the settings page through the Facebook top-level menu item
+	 * Navigate to the settings page through the Facebook top-level menu item.
 	 *
 	 * @since 1.1
+	 *
 	 * @uses add_submenu_page()
 	 * @param string $parent_slug Facebook top-level menu item slug
 	 * @return string submenu hook suffix
@@ -59,7 +78,7 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 
 		// no post types support comments. nothing to do here
 		if ( empty( $comments_settings->supporting_post_types ) )
-			return;
+			return '';
 
 		$hook_suffix = add_submenu_page(
 			$parent_slug,
@@ -80,9 +99,11 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Load stored options and scripts on settings page view
+	 * Load stored options and scripts on settings page view.
 	 *
 	 * @since 1.1
+	 *
+	 * @return void
 	 */
 	public function onload() {
 		$options = get_option( self::OPTION_NAME );
@@ -94,9 +115,11 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Load the page
+	 * Load the page.
 	 *
 	 * @since 1.1
+	 *
+	 * @return void
 	 */
 	public function settings_page() {
 		if ( ! isset( $this->hook_suffix ) )
@@ -106,11 +129,13 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Hook into the settings API
+	 * Hook into the settings API.
 	 *
 	 * @since 1.1
+	 *
 	 * @uses add_settings_section()
 	 * @uses add_settings_field()
+	 * @return void
 	 */
 	private function settings_api_init() {
 		if ( ! isset( $this->hook_suffix ) )
@@ -142,6 +167,13 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 			array( 'label_for' => 'facebook-comments-num-posts' )
 		);
 		add_settings_field(
+			'facebook-comments-order-by',
+			__( 'Order by', 'facebook' ),
+			array( &$this, 'display_order_by' ),
+			$this->hook_suffix,
+			$section
+		);
+		add_settings_field(
 			'facebook-comments-width',
 			__( 'Width', 'facebook' ),
 			array( &$this, 'display_width' ),
@@ -159,9 +191,11 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Introduce publishers to the Comments Box social plugin
+	 * Introduce publishers to the Comments Box social plugin.
 	 *
 	 * @since 1.1
+	 *
+	 * @return void
 	 */
 	public function section_header() {
 		global $facebook_loader;
@@ -172,9 +206,11 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Return a list of all public post types supporting the comments feature
+	 * Return a list of all public post types supporting the comments feature.
 	 *
 	 * @since 1.1
+	 *
+	 * @uses get_post_types()
 	 * @return array post type names supporting comments feature
 	 */
 	public static function post_types_supporting_comments() {
@@ -194,6 +230,8 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	 * On which single pages should the comments box appear?
 	 *
 	 * @since 1.1
+	 *
+	 * @return void
 	 */
 	public function display_show_on() {
 		$existing_value = self::get_display_conditionals_by_feature( 'comments', 'posts' );
@@ -220,9 +258,11 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Maximum number of posts displayed before viewer expansion
+	 * Maximum number of posts displayed before viewer expansion.
 	 *
 	 * @since 1.1
+	 *
+	 * @return void
 	 */
 	public function display_num_posts() {
 		$key = 'num_posts';
@@ -240,9 +280,12 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Allow the publisher to customize the width of the Comments Box
+	 * Allow the publisher to customize the width of the Comments Box.
 	 *
 	 * @since 1.1
+	 *
+	 * @global int $content_width content width of the theme
+	 * @return void
 	 */
 	public function display_width() {
 		global $content_width;
@@ -269,9 +312,11 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Customize the color scheme
+	 * Customize the color scheme.
 	 *
 	 * @since 1.1
+	 *
+	 * @return void
 	 */
 	public function display_colorscheme() {
 		$key = 'colorscheme';
@@ -280,9 +325,49 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	}
 
 	/**
-	 * Translate HTML data response returned from Facebook social plugin builder into underscored keys and PHP values before saving
+	 * Ordering choices.
+	 *
+	 * @since 1.3
+	 *
+	 * @return array associative array of social plugin field value and translated label
+	 */
+	public static function order_by_choices() {
+		return array(
+			'social' => __( 'social', 'facebook' ),
+			'time' => _x( 'oldest first', 'display comments ordered from oldest to newest', 'facebook' ),
+			'reverse_time' => _x( 'newest first', 'display comments ordered from newest to oldest', 'facebook' )
+		);
+	}
+
+	/**
+	 * Customize comment order.
+	 *
+	 * @since 1.3
+	 *
+	 * @return void
+	 */
+	public function display_order_by() {
+		$key = 'order_by';
+		$choices = self::order_by_choices();
+		if ( isset( $this->existing_options[$key] ) )
+			$existing_value = $this->existing_options[$key];
+		else
+			$existing_value = 'social';
+
+		echo '<fieldset id="facebook-comments-' . $key . '">';
+		foreach( $choices as $choice => $label ) {
+			echo '<label><input type="radio" name="' . self::OPTION_NAME . '[' . $key  . ']" value="' . $choice . '"';
+			checked( $choice, $existing_value );
+			echo ' /> ' . esc_html( $label ) . '</label> ';
+		}
+		echo '</fieldset>';
+	}
+
+	/**
+	 * Translate HTML data response returned from Facebook social plugin builder into underscored keys and PHP values before saving.
 	 *
 	 * @since 1.1
+	 *
 	 * @param array $options data-* options returned from Facebook social plugin builder
 	 * @return array $options options to store in WordPress
 	 */
@@ -294,6 +379,10 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 			$options['num_posts'] = absint( $options['num-posts'] );
 			unset( $options['num-posts'] );
 		}
+		if ( isset( $options['order-by'] ) ) {
+			$options['order_by'] = $options['order-by'];
+			unset( $options['order-by'] );
+		}
 		if ( isset( $options['width'] ) )
 			$options['width'] = absint( $options['width'] );
 
@@ -304,6 +393,7 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 	 * Sanitize Comments Box settings before they are saved to the database
 	 *
 	 * @since 1.1
+	 *
 	 * @param array $options Comments Box options
 	 * @return array clean option sets. note: we remove Comments Box social plugin default options, storing only custom settings (e.g. dark color scheme stored, light is default and therefore not stored)
 	 */
@@ -327,6 +417,11 @@ class Facebook_Comments_Settings extends Facebook_Social_Plugin_Settings {
 			delete_option( 'facebook_comments_enabled' );
 		}
 		unset( $options['show_on'] );
+
+		foreach( array( 'width', 'num_posts' ) as $option ) {
+			if ( isset( $options[ $option ] ) )
+				$options[ $option ] = absint( $options[ $option ] );
+		}
 
 		$comments_box = Facebook_Comments_Box::fromArray( $options );
 		if ( $comments_box )

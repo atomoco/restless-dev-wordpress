@@ -8,15 +8,11 @@ function wp_rp_update_tags($post_id) {
 		$post = get_post($post->post_parent);
 	}
 
-	if ($post->post_type === 'nav_menu_item') {
-		return;
-	}
-
 	$wpdb->query(
 		$wpdb->prepare('DELETE from ' . $wpdb->prefix . 'wp_rp_tags WHERE post_id=%d', $post->ID)
 	);
 
-	if ($post->post_type === 'page' || $post->post_type === 'attachment' || $post->post_status !== 'publish') {
+	if ($post->post_type !== 'post' ||  $post->post_status !== 'publish') {
 		return;
 	}
 
@@ -132,18 +128,20 @@ function wp_rp_generate_tags($post) {
 
 		foreach ($tag_obj['labels'] as $label) {
 			$label = $tag_obj['prefix'] . strtolower($label);
+			$label = substr($label, 0, WP_RP_MAX_LABEL_LENGTH);
 
 			array_push($all_tags, $label);
 
 			array_push($sql_tag_values, $post->ID);
+			array_push($sql_tag_values, $post->post_date);
 			array_push($sql_tag_values, $label);
 			array_push($sql_tag_values, $weight);
 		}
 	}
 
 	if (count($all_tags) > 0 && $post->post_status == 'publish') {
-		$sql_tag_format_line = '(%d, %s, %f)';
-		$tags_insert_query = $wpdb->prepare('INSERT INTO ' . $wpdb->prefix . 'wp_rp_tags (post_id, label, weight)
+		$sql_tag_format_line = '(%d, %s, %s, %f)';
+		$tags_insert_query = $wpdb->prepare('INSERT INTO ' . $wpdb->prefix . 'wp_rp_tags (post_id, post_date, label, weight)
 				VALUES ' . implode(', ', array_fill(0, count($all_tags), $sql_tag_format_line)) . ';',
 			$sql_tag_values);
 
@@ -194,6 +192,7 @@ function wp_rp_fetch_related_posts_v2($limit = 10, $exclude_ids = array()) {
 			) as freqs
 		WHERE
 			target.post_id NOT IN (%s) AND
+			" . ($options['max_related_post_age_in_days'] > 0 ? "target.post_date > DATE_SUB(CURDATE(), INTERVAL %s DAY) AND" : "") . "
 			target.label=freqs.label AND
 			target.label IN (" . implode(', ', array_fill(0, count($tags), "%s"))  . ")" .
 			(empty($exclude_categories_labels) ? "" : " AND
@@ -202,17 +201,18 @@ function wp_rp_fetch_related_posts_v2($limit = 10, $exclude_ids = array()) {
 					WHERE label IN (" . implode(', ', array_fill(0, count($exclude_categories_labels), "%s")) . ")
 				)") . "
 		GROUP BY target.post_id
-		ORDER BY score desc
+		ORDER BY score desc, target.post_id desc
 		LIMIT %d;",
 		array_merge(
 			array($total_number_of_posts, $total_number_of_posts),
 			$tags,
 			array($exclude_ids_str),
+			$options['max_related_post_age_in_days'] > 0 ? array($options['max_related_post_age_in_days']) : array(),
 			$tags,
 			$exclude_categories_labels,
 			array($limit * 2)
 		)
-	);	// limit * just in case
+	);	// limit * 2 just in case
 
 	$related_posts_with_score = $wpdb->get_results($post_id_query, 0);
 	if (empty($related_posts_with_score)) {
@@ -230,10 +230,11 @@ function wp_rp_fetch_related_posts_v2($limit = 10, $exclude_ids = array()) {
 	$post_query = $wpdb->prepare("
 		SELECT post.ID, post.post_title, post.post_excerpt, post.post_content, post.post_date, post.comment_count
 		FROM $wpdb->posts as post
-		WHERE post.ID IN (" . implode(', ', array_fill(0, count($related_post_ids), '%s')) . ")
-			AND post_status = 'publish'
-			AND post_date_gmt < %s",
-		array_merge($related_post_ids, array($now, $limit)));
+		WHERE post.ID IN (" . implode(', ', array_fill(0, count($related_post_ids), '%d')) . ")
+			AND post.post_type = 'post'
+			AND post.post_status = 'publish'
+			AND post.post_date_gmt < %s",
+		array_merge($related_post_ids, array($now)));
 
 	$related_posts = $wpdb->get_results($post_query);
 
@@ -269,9 +270,26 @@ function wp_rp_fetch_related_posts($limit = 10, $exclude_ids = array()) {
 
 	$related_posts = false;
 	if ($taglist) {
-		$q = "SELECT p.ID, p.post_title, p.post_content,p.post_excerpt, p.post_date, p.comment_count, count(t_r.object_id) as cnt FROM $wpdb->term_taxonomy t_t, $wpdb->term_relationships t_r, $wpdb->posts p WHERE t_t.taxonomy ='post_tag' AND t_t.term_taxonomy_id = t_r.term_taxonomy_id AND t_r.object_id  = p.ID AND (t_t.term_id IN ($taglist)) AND p.ID NOT IN ($exclude_ids_str) AND " .
-			(!$options['exclude_categories'] ? "" : "p.ID NOT IN (SELECT tr.object_id FROM $wpdb->term_taxonomy tt, $wpdb->term_relationships tr WHERE tt.taxonomy = 'category' AND tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.term_id IN (" . $options['exclude_categories'] . ")) AND ") .
-			"p.post_status = 'publish' AND p.post_date_gmt < '$now' GROUP BY t_r.object_id ORDER BY cnt DESC, p.post_date_gmt DESC LIMIT $limit;";
+		$q = "SELECT p.ID, p.post_title, p.post_content,p.post_excerpt, p.post_date, p.comment_count, count(t_r.object_id) as cnt 
+				FROM $wpdb->term_taxonomy t_t, $wpdb->term_relationships t_r, $wpdb->posts p
+				WHERE t_t.taxonomy ='post_tag'
+					AND t_t.term_taxonomy_id = t_r.term_taxonomy_id
+					AND t_r.object_id = p.ID
+					AND (t_t.term_id IN ($taglist))
+					AND p.ID NOT IN ($exclude_ids_str)
+					AND " . (!$options['exclude_categories'] ? "" : "p.ID NOT IN (
+						SELECT tr.object_id FROM $wpdb->term_taxonomy tt, $wpdb->term_relationships tr
+							WHERE tt.taxonomy = 'category'
+							AND tt.term_taxonomy_id = tr.term_taxonomy_id
+							AND tt.term_id IN (" . $options['exclude_categories'] . "))
+							AND "
+						) .
+						"p.post_status = 'publish'
+					AND p.post_type = 'post'
+					AND " . ($options['max_related_post_age_in_days'] == 0 ? ""
+						: "p.post_date > DATE_SUB(CURDATE(), INTERVAL " . $options['max_related_post_age_in_days'] . " DAY) AND ") .
+					    "p.post_date_gmt < '$now' GROUP BY t_r.object_id
+				ORDER BY cnt DESC, p.post_date_gmt DESC LIMIT $limit;";
 
 		$related_posts = $wpdb->get_results($q);
 	}
@@ -289,12 +307,16 @@ function wp_rp_fetch_random_posts($limit = 10, $exclude_ids = array()) {
 	if($options['exclude_categories']) {
 		$q1 .= " AND ID NOT IN (SELECT tr.object_id FROM $wpdb->term_taxonomy tt, $wpdb->term_relationships tr WHERE tt.taxonomy = 'category' AND tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.term_id IN (" . $options['exclude_categories'] . "))";
 	}
+	if($options['max_related_post_age_in_days'] > 0) {
+		$q1 .= " AND post_date > DATE_SUB(CURDATE(), INTERVAL " . $options['max_related_post_age_in_days'] . " DAY)";
+	}
 	$ids = $wpdb->get_col($q1, 0);
 	$count = count($ids);
-	if($count <= 1) {
-		if($count === 0) return false;
-		if($count === 1) $rnd = $ids;
-	} else {
+	if($count === 0) {
+		return false;
+	/*} else if($count === 1) {
+		$rnd = $ids;*/
+	} else if($count > 1) {
 		$display_number = min($limit, $count);
 
 		$next_seed = rand();
@@ -302,18 +324,16 @@ function wp_rp_fetch_random_posts($limit = 10, $exclude_ids = array()) {
 		$seed = $t - $t % 300 + $post->ID << 4;		// We keep the same seed for 5 minutes, so MySQL can cache the `q2` query.
 		srand($seed);
 
-		$rnd = array_rand($ids, $display_number);	// This is an array of random indexes, sorted
-		if ($display_number == 1) {
-			$ids = array($ids[$rnd]);
-		} else {
-			shuffle($rnd);
-			foreach ($rnd as &$i) {		// Here, index is passed by reference, so we can modify it
-				$i = $ids[$i];		// Replace indexes with corresponding IDs
-			}
-			$ids = $rnd;
-		}
+		shuffle($ids);
+
+		$ids = array_slice($ids, 0, $display_number);
+
 		srand($next_seed);
 	}
 	$q2 = "SELECT ID, post_title, post_content, post_excerpt, post_date, comment_count FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' AND ID IN (" . implode(',', $ids) . ")";
-	return $wpdb->get_results($q2);
+	$results = $wpdb->get_results($q2);
+	asort($ids);
+	$ids_keys = array_keys($ids);
+	array_multisort($ids_keys, $results);
+	return $results;
 }
